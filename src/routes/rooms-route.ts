@@ -44,6 +44,9 @@ export async function roomsRoute(app: FastifyInstance) {
         },
       },
       take: -10,
+      orderBy: {
+        created_at: "asc",
+      },
     });
 
     const formattedMessages = messages.map((message) => {
