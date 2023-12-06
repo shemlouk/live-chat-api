@@ -8,6 +8,17 @@ export async function socketIo(app: FastifyInstance) {
   app.ready((err) => {
     if (err) throw err;
 
+    app.io.use((socket, next) => {
+      const token = socket.handshake.auth.token;
+
+      try {
+        app.jwt.verify(token);
+        next();
+      } catch (error) {
+        next(new Error("Unauthorized."));
+      }
+    });
+
     app.io.on("connection", (socket: Socket) => {
       console.info("A user has connected:", socket.id);
       onlineUsersCount++;
