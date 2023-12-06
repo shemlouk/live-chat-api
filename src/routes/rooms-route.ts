@@ -14,4 +14,13 @@ export async function roomsRoute(app: FastifyInstance) {
     const rooms = await prisma.room.findMany();
     reply.send({ rooms });
   });
+
+  app.get("/:roomId", async (request, reply) => {
+    const { roomId } = request.params as { roomId: string };
+
+    const room = await prisma.room.findUnique({ where: { id: roomId } });
+    if (!room) reply.status(404).send();
+
+    reply.send({ room });
+  });
 }

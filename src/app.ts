@@ -18,7 +18,7 @@ app.register(fastifyJwt, {
 });
 
 app.register(usersRoute);
-app.register(roomsRoute, { prefix: "/rooms" });
+app.register(roomsRoute, { prefix: "/room" });
 app.register(socketIo);
 
 export { app };
